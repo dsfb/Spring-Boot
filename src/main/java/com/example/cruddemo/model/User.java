@@ -1,9 +1,11 @@
 package com.example.cruddemo.model;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class User {
@@ -19,10 +21,10 @@ public class User {
         this.email = email;
     }
 
-    // @NotBlank (message = "Name is mandatory")
+    @NotBlank (message = "Name is mandatory")
     private String name;
 
-    // @NotBlank (message = "Email is mandatory")
+    @NotBlank (message = "Email is mandatory")
     private String email;
 
     public long getId() {
@@ -57,4 +59,35 @@ public class User {
                 ", email='" + getName() + '\'' +
                 '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        return true;
+    }
+
+    
 }
